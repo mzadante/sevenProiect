@@ -20,11 +20,11 @@
 }
 
 #gameOver{
-    /* display: none; */
-    display: flex;
+    display: none;
+    /* display: flex;
     justify-content: center;
     color: red;
-    font-size: 3rem;
+    font-size: 3rem; */
 }
 
 .tablero-info{
