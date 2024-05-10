@@ -48,6 +48,75 @@ const drawSquare = (square, type) => {
     }
 }
 
+const moveSnake = () => {
+    const newSquare = String(
+        Number(snake[snake.length - 1]) + directions[direction])
+        .padStart(2, '0');
+    const [row, column] = newSquare.split('');
+
+
+    if( newSquare < 0 || 
+        newSquare > tableroSize * tableroSize  ||
+        (direction === 'ArrowRight' && column == 0) ||
+        (direction === 'ArrowLeft' && column == 9 ||
+        boardSquares[row][column] === squareTypes.snakeSquare) ) {
+        gameOver();
+    } else {
+        snake.push(newSquare);
+        if(boardSquares[row][column] === squareTypes.foodSquare) {
+            addFood();
+        } else {
+            const emptySquare = snake.shift();
+            drawSquare(emptySquare, 'emptySquare');
+        }
+        drawSnake();
+    }
+}
+
+const addFood = () => {
+    score++;
+    updateScore();
+    createRandomFood();
+}
+const gameOver = () => {
+    gameOverSign.style.display = 'block';
+    clearInterval(moveInterval);
+    startButton.disabled = false;
+}
+
+const setDirection = newDirection => {
+    directions = newDirection;
+}
+
+const directionEvent = key => {
+    switch(key.code){
+        case 'ArrowUp':
+            directions !== 'ArrowDown' && setDirections(key.code);
+            break;    
+        case 'ArrowDown':
+            directions !== 'ArrowUp' && setDirections(key.code);
+            break;
+        case 'ArrowRight':
+            directions !== 'ArrowRight' && setDirections(key.code);
+            break;
+        case 'ArrowLeft':
+            directions !== 'ArrowLeft' && setDirections(key.code);
+            break;
+        default:
+            break;    
+    }
+}
+
+const createRandomFood = () => {
+    const randomEmptysquare = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+    drawSquare(randomEmptysquare, 'foodSquare');
+}
+
+const updateScore = () => {
+    scoreBoard.innerText = score;
+}
+
+
 const createBoard = () => {
     boardSquares.forEach((row, rowIndex) => {
         row.forEach((column, columnIndex) => {
@@ -77,5 +146,9 @@ const startGame = () => {
     gameOverSign.style.display = 'none';
     startButton.style.display = 'none';
     drawSnake();
+    updateScore();
+    createRandomFood();
+    document.addEventListener('keydown', directionEvent);
+    moveInterval = setInterval(moveSnake, gameSpeed);
 }
  startButton.addEventListener('click', startGame);
