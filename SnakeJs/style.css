@@ -1,4 +1,52 @@
 *{
     font-family: Ubuntu, sans-serif;
-    
+
+}
+
+#TableroGame .tablero-info{
+    max-width: 500px;
+}
+
+#TableroGame{
+    display:grid;
+    grid-template-columns: repeat(10,1fr);
+}
+
+#start{
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    font-size:1.5rem;
+}
+
+#gameOver{
+    /* display: none; */
+    display: flex;
+    justify-content: center;
+    color: red;
+    font-size: 3rem;
+}
+
+.tablero-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+#tableroScore{
+    display: inline-flex;
+}
+
+.square{
+    aspect-ratio: 1;
+}
+
+.emptySquare{
+    background-color: #7299d4;
+}
+.snakeSquare{
+    background-color: #e0c40d;
+}
+.foodSquare{
+    background-color: red;
 }
